@@ -1,0 +1,20 @@
+package embox.cmd.net
+
+@AutoCmd
+@Cmd(name = "dhcpd",
+	help = "simple dhcp server",
+	man = '''
+		NAME
+			dhcpd - dhcp server.
+		SYNOPSIS
+			dhcpd
+		DESCRIPTION
+			
+		AUTHORS
+			Anton Bondarev
+	''')
+module dhcpd {	
+	option string if_name = "eth0"
+
+	source "dhcpd.c"
+}
