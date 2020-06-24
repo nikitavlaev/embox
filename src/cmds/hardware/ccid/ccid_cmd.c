@@ -24,7 +24,7 @@ static void print_usage(void) {
 	printf("\t    ccid_cmd 0 1: Works with CCID device on bus 0, addr 1.\n");
 }
 
-static void ccid_cmd_show_atr(struct usb_dev *udev) {
+static inline void ccid_cmd_show_atr(struct usb_interface *udev) {
 	struct ccid_msg_hdr_icc_power_on *pwr_on_hdr;
 	struct ccid_msg_hdr *hdr;
 	uint8_t buf[64];
@@ -51,7 +51,7 @@ static void ccid_cmd_show_atr(struct usb_dev *udev) {
 	printf("\n");
 }
 
-static int ccid_cmd_card_status(struct usb_dev *udev) {
+static inline int ccid_cmd_card_status(struct usb_interface *udev) {
 	struct ccid_msg_hdr *hdr;
 	struct ccid_msg_hdr_bulk_in *bulk_in_hdr;
 	uint8_t buf[64];
@@ -72,7 +72,7 @@ static int ccid_cmd_card_status(struct usb_dev *udev) {
 	return bulk_in_hdr->b_status & CCID_SLOT_STATUS_MASK;
 }
 
-static int ccid_cmd_card_cmd(struct usb_dev *udev, uint8_t *cmd,
+static inline int ccid_cmd_card_cmd(struct usb_interface *udev, uint8_t *cmd,
 		int len) {
 	struct ccid_msg_hdr *hdr;
 	struct ccid_msg_hdr_bulk_in *bulk_in_hdr;
@@ -123,8 +123,8 @@ out_err:
 	fprintf(stderr, "ccid_cmd_card_cmd failed\n");
 	return -1;
 }
-
-static void handle_ccid_commands(struct usb_dev *udev) {
+#if 0
+static void handle_ccid_commands(struct usb_interface *udev) {
 	int card_status;
 
 	printf("\n");
@@ -174,7 +174,7 @@ static void handle_ccid_commands(struct usb_dev *udev) {
 		ccid_cmd_card_cmd(udev, cmd_buf, cmd_len);
 	}
 }
-
+#endif
 int main(int argc, char **argv) {
 	struct usb_dev *usb_dev = NULL;
 	int opt, ret;
@@ -212,13 +212,14 @@ int main(int argc, char **argv) {
 		if ((usb_dev->bus_idx != bus) || (usb_dev->addr != addr)) {
 			continue;
 		}
-
+#if 0
 		/* Make sure it's CCID device */
 		if (usb_dev->iface_desc[0]
 			&& (usb_dev->iface_desc[0]->b_interface_class == USB_CLASS_CCID)) {
 			handle_ccid_commands(usb_dev);
 			return 0;
 		}
+#endif
 	}
 
 	fprintf(stderr, "No CCID device found: bus=%d, addr=%d\n", bus, addr);

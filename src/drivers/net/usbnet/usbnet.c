@@ -110,7 +110,7 @@ static void usbnet_timer_handler(struct sys_timer *tmr, void *param) {
 			in_endp->max_packet_size);
 }
 
-static int usbnet_probe(struct usb_dev *dev) {
+static int usbnet_probe(struct usb_interface *dev) {
 	struct net_device *nic;
 	struct usbnet_priv *nic_priv;
 	int res;
@@ -158,7 +158,7 @@ out_ret:
 	return res;
 }
 
-static void usbnet_disconnect(struct usb_dev *dev, void *data) {
+static void usbnet_disconnect(struct usb_interface *dev, void *data) {
 }
 
 static struct usb_device_id usbnet_id_table[] = {

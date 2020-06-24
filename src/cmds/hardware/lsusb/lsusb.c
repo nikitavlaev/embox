@@ -65,7 +65,7 @@ static void show_usb_desc_device(struct usb_dev *usb_dev) {
 			usb_dev->dev_desc.i_serial_number,
 			usb_dev->dev_desc.b_num_configurations);
 }
-
+#if 0
 static void show_usb_desc_interface(struct usb_dev *usb_dev) {
 	if (!usb_dev->iface_desc[0]) {
 		printf(" Interface Descriptor:\n"
@@ -94,7 +94,7 @@ static void show_usb_desc_interface(struct usb_dev *usb_dev) {
 			usb_dev->iface_desc[0]->b_interface_protocol,
 			usb_dev->iface_desc[0]->i_interface);
 }
-
+#endif
 static void show_usb_desc_configuration(struct usb_dev *usb_dev) {
 	struct usb_desc_configuration *config = \
 				(struct usb_desc_configuration *) usb_dev->config_buf;
@@ -150,7 +150,9 @@ int main(int argc, char **argv) {
 		if(flag) {
 			show_usb_desc_device(usb_dev);
 			show_usb_desc_configuration(usb_dev);
+#if 0
 			show_usb_desc_interface(usb_dev);
+#endif
 		}
 	}
 
