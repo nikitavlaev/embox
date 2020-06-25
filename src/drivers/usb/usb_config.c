@@ -284,8 +284,6 @@ int usb_get_ep0(struct usb_dev *dev) {
 
 	usb_endp_fill_from_desc(ep, &usb_desc_endp_control_default);
 
-	dev->endpoints[0] = NULL;
-
 	if (hcd->ops->endp_hci_alloc) {
 		ep->hci_specific = hcd->ops->endp_hci_alloc(ep);
 		if (!ep->hci_specific) {
@@ -293,8 +291,6 @@ int usb_get_ep0(struct usb_dev *dev) {
 			return -1;
 		}
 	}
-
-	dev->endp_n = 1;
 
 	return 0;
 }

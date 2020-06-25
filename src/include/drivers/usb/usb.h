@@ -179,6 +179,8 @@ struct usb_dev {
 
 	struct usb_endp endp0;
 
+	struct usb_interface *usb_iface[USB_DEV_MAX_INTERFACES];
+
 	enum usb_speed speed;
 };
 
