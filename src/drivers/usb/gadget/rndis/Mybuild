@@ -6,3 +6,9 @@ module f_rndis {
 	@IncludeExport(path="drivers/usb/gadget")
 	source "rndis_desc.h"
 }
+
+module rndis_gadget {
+	source "rndis_gadget.c"
+
+	depends f_rndis
+}
